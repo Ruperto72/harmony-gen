@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarmonyGen - Startprojekt</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HarmonyGen 🎵</h1>
+        <p>Sjung i mikrofonen för att se din tonhöjd</p>
+        
+        <div class="controls">
+            <button id="start-btn">Starta Mikrofon</button>
+        </div>
+
+        <div id="status-panel" class="panel">
+            <p>Status: <span id="status">Väntar...</span></p>
+            <div class="display">
+                <h2 id="pitch-display">-- Hz</h2>
+                <h3 id="note-display">Not: --</h3>
+            </div>
+        </div>
+
+        <div id="settings-popup" class="settings-box">
+            <h3>Inställningar</h3>
+            <label>Harmoni-typ:</label>
+            <select id="harmony-type">
+                <option value="third">Ters (3:e)</option>
+                <option value="fifth">Kvint (5:e)</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/pitchy@4.0.0/dist/index-browser.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
