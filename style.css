@@ -1,0 +1,206 @@
+/* === Reset & Base === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem 3rem;
+}
+
+/* === Layout === */
+.container {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* === Header === */
+header {
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #22d3ee 0%, #4ade80 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: #64748b;
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+}
+
+/* === Knappar === */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: #22d3ee;
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s, opacity 0.15s;
+}
+
+button:hover  { background: #06b6d4; }
+button:active { transform: scale(0.97); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+button.secondary {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+}
+
+button.secondary:hover { background: #334155; color: #e2e8f0; }
+
+/* === Inställningspanel === */
+.settings-box {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.settings-box.visible {
+    display: flex;
+}
+
+.settings-box h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.setting-row label {
+    min-width: 140px;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+select {
+    flex: 1;
+    background: #0f172a;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+    border-radius: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    appearance: auto;
+}
+
+select:focus { outline: 2px solid #22d3ee; outline-offset: 2px; }
+
+input[type="file"] {
+    flex: 1;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* === Statusvisning === */
+.panel {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+}
+
+.status-line {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.status-line span {
+    color: #4ade80;
+    font-weight: 600;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+#pitch-display {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #22d3ee;
+    font-variant-numeric: tabular-nums;
+}
+
+#note-display {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4ade80;
+}
+
+#scale-display {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* === Vågformscanvas === */
+.canvas-container {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    height: 160px;
+}
+
+#waveform-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* === Export === */
+.export-controls {
+    justify-content: flex-end;
+}
+
+/* === Responsivitet === */
+@media (max-width: 480px) {
+    h1 { font-size: 1.9rem; }
+    .setting-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .setting-row label { min-width: unset; }
+    select, input[type="file"] { width: 100%; }
+}
