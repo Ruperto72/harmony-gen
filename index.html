@@ -16,6 +16,8 @@
         <!-- Huvudkontroller -->
         <div class="controls">
             <button id="start-btn">Starta Mikrofon</button>
+            <label for="file-input" class="btn-file">&#127925; Ladda upp fil</label>
+            <input type="file" id="file-input" accept="audio/*" style="display:none">
             <button id="settings-toggle" class="secondary">&#9881; Inställningar</button>
         </div>
 
@@ -41,11 +43,6 @@
                     <option value="3">3 stämmor</option>
                 </select>
             </div>
-
-            <div class="setting-row">
-                <label for="file-input">Ladda upp fil:</label>
-                <input type="file" id="file-input" accept="audio/*">
-            </div>
         </div>
 
         <!-- Statusvisning -->
@@ -66,6 +63,7 @@
         <!-- Export/inspelning -->
         <div class="controls export-controls">
             <button id="export-btn" class="secondary">&#9210; Spela in</button>
+            <a id="download-link" class="btn-download" style="display:none" download="harmony-export.webm">&#11015; Ladda ned inspelning</a>
         </div>
     </div>
 

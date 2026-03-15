@@ -47,6 +47,7 @@ const scaleDisplay    = document.getElementById('scale-display');
 const waveformCanvas  = document.getElementById('waveform-canvas');
 const fileInput       = document.getElementById('file-input');
 const exportBtn       = document.getElementById('export-btn');
+const downloadLink    = document.getElementById('download-link');
 const settingsToggle  = document.getElementById('settings-toggle');
 const settingsPanel   = document.getElementById('settings-popup');
 
@@ -341,17 +342,21 @@ async function toggleRecording() {
         exportBtn.textContent = '⏺ Spela in';
 
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'harmony-export.webm';
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 15000);
+        if (downloadLink) {
+            downloadLink.href = url;
+            downloadLink.style.display = 'inline-block';
+            downloadLink.addEventListener('click', () => {
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            }, { once: true });
+        }
     } else {
+        // Dölj eventuell tidigare nedladdningslänk
+        if (downloadLink) { downloadLink.style.display = 'none'; downloadLink.href = '#'; }
         recorder = new Tone.Recorder();
         Tone.getDestination().connect(recorder);
         await recorder.start();
         isRecording = true;
-        exportBtn.textContent = '⏹ Stoppa & Ladda ned';
+        exportBtn.textContent = '⏹ Stoppa inspelning';
     }
 }
 
