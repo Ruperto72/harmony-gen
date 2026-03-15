@@ -3,33 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HarmonyGen - Startprojekt</title>
+    <title>HarmonyGen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>HarmonyGen 🎵</h1>
-        <p>Sjung i mikrofonen för att se din tonhöjd</p>
-        
+        <header>
+            <h1>HarmonyGen</h1>
+            <p class="subtitle">Sjung i mikrofonen för att generera harmonistämmor i realtid</p>
+        </header>
+
+        <!-- Huvudkontroller -->
         <div class="controls">
             <button id="start-btn">Starta Mikrofon</button>
+            <button id="settings-toggle" class="secondary">&#9881; Inställningar</button>
         </div>
 
-        <div id="status-panel" class="panel">
-            <p>Status: <span id="status">Väntar...</span></p>
-            <div class="display">
-                <h2 id="pitch-display">-- Hz</h2>
-                <h3 id="note-display">Not: --</h3>
+        <!-- Inställningspanel -->
+        <div id="settings-popup" class="settings-box">
+            <h3>Inställningar</h3>
+
+            <div class="setting-row">
+                <label for="harmony-type">Intervall:</label>
+                <select id="harmony-type">
+                    <option value="third">Ters (3:e)</option>
+                    <option value="fifth">Kvint (5:e)</option>
+                    <option value="sixth">Sext (6:e)</option>
+                    <option value="octave">Oktav</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <label for="voice-count">Antal stämmor:</label>
+                <select id="voice-count">
+                    <option value="1">1 stämma</option>
+                    <option value="2">2 stämmor</option>
+                    <option value="3">3 stämmor</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <label for="file-input">Ladda upp fil:</label>
+                <input type="file" id="file-input" accept="audio/*">
             </div>
         </div>
 
-        <div id="settings-popup" class="settings-box">
-            <h3>Inställningar</h3>
-            <label>Harmoni-typ:</label>
-            <select id="harmony-type">
-                <option value="third">Ters (3:e)</option>
-                <option value="fifth">Kvint (5:e)</option>
-            </select>
+        <!-- Statusvisning -->
+        <div id="status-panel" class="panel">
+            <p class="status-line">Status: <span id="status">Väntar...</span></p>
+            <div class="display">
+                <h2 id="pitch-display">-- Hz</h2>
+                <h3 id="note-display">Not: --</h3>
+                <p id="scale-display">Tonart: --</p>
+            </div>
+        </div>
+
+        <!-- Vågformsvisualisering -->
+        <div class="canvas-container">
+            <canvas id="waveform-canvas"></canvas>
+        </div>
+
+        <!-- Export/inspelning -->
+        <div class="controls export-controls">
+            <button id="export-btn" class="secondary">&#9210; Spela in</button>
         </div>
     </div>
 
