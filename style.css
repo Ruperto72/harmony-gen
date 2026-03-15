@@ -133,6 +133,37 @@ input[type="file"] {
     cursor: pointer;
 }
 
+.btn-file {
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.5rem;
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.btn-file:hover { background: #334155; color: #e2e8f0; }
+
+.btn-download {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.5rem;
+    background: #4ade80;
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.btn-download:hover { background: #22c55e; }
+
 /* === Statusvisning === */
 .panel {
     background: #1e293b;
