@@ -288,18 +288,27 @@ async function handleFileUpload(event) {
     statusText.innerText = `Laddar: ${file.name}...`;
 
     try {
-        const arrayBuffer = await file.arrayBuffer();
+        // Använd FileReader för bred mobilkompatibilitet
+        const arrayBuffer = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => resolve(e.target.result);
+            reader.onerror = () => reject(new Error('FileReader misslyckades'));
+            reader.readAsArrayBuffer(file);
+        });
+
         const rawCtx = Tone.getContext().rawContext;
-        const audioBuffer = await rawCtx.decodeAudioData(arrayBuffer);
+        if (!rawCtx) throw new Error('AudioContext ej tillgänglig');
+
+        const audioBuffer = await rawCtx.decodeAudioData(arrayBuffer.slice(0));
 
         // Sätt upp analyser för visualisering
         if (!waveformAnalyser) waveformAnalyser = new Tone.Analyser('waveform', 2048);
         if (!pitchDetector)    pitchDetector = pitchy.PitchDetector.forFloat32Array(waveformAnalyser.size);
 
-        const player = new Tone.Player();
-        player.buffer = new Tone.ToneAudioBuffer(audioBuffer);
+        const toneBuffer = new Tone.ToneAudioBuffer(audioBuffer);
+        const player = new Tone.Player(toneBuffer);
         player.connect(waveformAnalyser);
-        player.toDestination(); // torrt signal
+        player.toDestination();
 
         // Harmoni-PitchShift för filen
         const shifts = getSemitoneShifts();
@@ -325,8 +334,8 @@ async function handleFileUpload(event) {
 
         statusText.innerText = `Spelar: ${file.name}`;
     } catch (err) {
-        statusText.innerText = 'Kunde inte läsa filen.';
-        console.error(err);
+        statusText.innerText = `Fel: ${err.message || 'Kunde inte läsa filen'}`;
+        console.error('handleFileUpload fel:', err);
     }
 }
 
