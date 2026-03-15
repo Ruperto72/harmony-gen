@@ -344,28 +344,39 @@ async function handleFileUpload(event) {
 // ============================================================
 
 async function toggleRecording() {
-    if (isRecording) {
-        const blob = await recorder.stop();
-        recorder = null;
-        isRecording = false;
-        exportBtn.textContent = '⏺ Spela in';
+    try {
+        if (isRecording) {
+            const blob = await recorder.stop();
+            recorder = null;
+            isRecording = false;
+            exportBtn.textContent = '⏺ Spela in';
 
-        const url = URL.createObjectURL(blob);
-        if (downloadLink) {
-            downloadLink.href = url;
-            downloadLink.style.display = 'inline-block';
-            downloadLink.addEventListener('click', () => {
-                setTimeout(() => URL.revokeObjectURL(url), 10000);
-            }, { once: true });
+            const ext  = blob.type.includes('mp4') ? 'mp4' : 'webm';
+            const url  = URL.createObjectURL(blob);
+            if (downloadLink) {
+                downloadLink.href     = url;
+                downloadLink.download = `harmony-export.${ext}`;
+                downloadLink.style.display = 'inline-block';
+                downloadLink.addEventListener('click', () => {
+                    setTimeout(() => URL.revokeObjectURL(url), 10000);
+                }, { once: true });
+            }
+        } else {
+            await Tone.start();
+            if (downloadLink) { downloadLink.style.display = 'none'; downloadLink.href = '#'; }
+            recorder = new Tone.Recorder();
+            Tone.getDestination().connect(recorder);
+            await recorder.start();
+            isRecording = true;
+            exportBtn.textContent = '⏹ Stoppa inspelning';
+            statusText.innerText = 'Spelar in...';
         }
-    } else {
-        // Dölj eventuell tidigare nedladdningslänk
-        if (downloadLink) { downloadLink.style.display = 'none'; downloadLink.href = '#'; }
-        recorder = new Tone.Recorder();
-        Tone.getDestination().connect(recorder);
-        await recorder.start();
-        isRecording = true;
-        exportBtn.textContent = '⏹ Stoppa inspelning';
+    } catch (err) {
+        statusText.innerText = `Inspelningsfel: ${err.message || err}`;
+        console.error('toggleRecording fel:', err);
+        isRecording = false;
+        recorder = null;
+        exportBtn.textContent = '⏺ Spela in';
     }
 }
 
